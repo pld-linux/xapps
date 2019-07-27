@@ -153,32 +153,34 @@ Vala API for xapp library.
 %description -n vala-xapp -l pl.UTF-8
 API języka Vala do biblioteki xapp.
 
-%package -n python-xapp
+%package -n python-xapps-overrides
 Summary:	Python 2 binding for xapp library
 Summary(pl.UTF-8):	Wiązanie Pythona 2 do biblioteki xapp
 License:	LGPL v3+
 Group:		Libraries/Python
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	python-pygobject3 >= 3
+Obsoletes:	python-xapp < 1.4.8
 
-%description -n python-xapp
+%description -n python-xapps-overrides
 Python 2 binding for xapp library.
 
-%description -n python-xapp -l pl.UTF-8
+%description -n python-xapps-overrides -l pl.UTF-8
 Wiązanie Pythona 2 do biblioteki xapp.
 
-%package -n python3-xapp
+%package -n python3-xapps-overrides
 Summary:	Python 3 binding for xapp library
 Summary(pl.UTF-8):	Wiązanie Pythona 3 do biblioteki xapp
 License:	LGPL v3+
 Group:		Libraries/Python
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	python3-pygobject3 >= 3
+Obsoletes:	python3-xapp < 1.4.8
 
-%description -n python3-xapp
+%description -n python3-xapps-overrides
 Python 3 binding for xapp library.
 
-%description -n python3-xapp -l pl.UTF-8
+%description -n python3-xapps-overrides -l pl.UTF-8
 Wiązanie Pythona 3 do biblioteki xapp.
 
 %prep
@@ -275,13 +277,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/xapp.vapi
 
 %if %{with python2}
-%files -n python-xapp
+%files -n python-xapps-overrides
 %defattr(644,root,root,755)
 %{py_sitedir}/gi/overrides/XApp.py[co]
 %endif
 
 %if %{with python3}
-%files -n python3-xapp
+%files -n python3-xapps-overrides
 %defattr(644,root,root,755)
 %{py3_sitedir}/gi/overrides/XApp.py
 %{py3_sitedir}/gi/overrides/__pycache__/XApp.cpython-*.py[co]
