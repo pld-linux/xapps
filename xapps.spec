@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	1.4.5
+Version:	1.4.8
 Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapps/releases
 Source0:	https://github.com/linuxmint/xapps/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	97cb7d5e755e67d1217aa0a1f1b6d3bd
+# Source0-md5:	8eb1f412d7deddd87cda5b783488ca9b
 URL:		https://github.com/linuxmint/xapps
 BuildRequires:	cairo-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
