@@ -17,11 +17,14 @@ Source0:	https://github.com/linuxmint/xapps/archive/%{version}/%{name}-%{version
 # Source0-md5:	2de8aaa655f58e270fb1e137d725b8a5
 URL:		https://github.com/linuxmint/xapps
 BuildRequires:	cairo-devel
+BuildRequires:	cairo-gobject-devel
+BuildRequires:	dbus-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.37.3
 BuildRequires:	gtk+3-devel >= 3.3.16
 BuildRequires:	gtk-doc
+BuildRequires:	libdbusmenu-gtk3-devel
 BuildRequires:	libgnomekbd-devel
 BuildRequires:	meson
 BuildRequires:	ninja >= 1.5
