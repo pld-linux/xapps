@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	1.4.8
-Release:	4
+Version:	1.8.4
+Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapps/releases
 Source0:	https://github.com/linuxmint/xapps/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	8eb1f412d7deddd87cda5b783488ca9b
+# Source0-md5:	2de8aaa655f58e270fb1e137d725b8a5
 URL:		https://github.com/linuxmint/xapps
 BuildRequires:	cairo-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
@@ -109,7 +109,7 @@ Summary:	API documentation for xapp library
 Summary(pl.UTF-8):	Dokumentacja API biblioteki xapp
 License:	LGPL v3+
 Group:		Documentation
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -126,7 +126,7 @@ License:	LGPL v3+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	glade >= 2
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -143,7 +143,7 @@ License:	LGPL v3+
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -183,6 +183,21 @@ Python 3 binding for xapp library.
 %description -n python3-xapps-overrides -l pl.UTF-8
 Wiązanie Pythona 3 do biblioteki xapp.
 
+%package -n mate-applet-xapp-status
+Summary:	XApp Status Applet for MATE
+Summary(pl.UTF-8):	Applet stanu XApp dla MATE
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+Requires:	mate-panel >= 1.18
+Requires:	python3-xapps-overrides = %{version}-%{release}
+
+%description -n mate-applet-xapp-status
+XApp Status Applet for MATE - area where XApp status icons appear.
+
+%description -n mate-applet-xapp-status -l pl.UTF-8
+Applet stanu XApp dla MATE - miejsce, gdzie pojawiają się ikony stanu
+XApp.
+
 %prep
 %setup -q
 
@@ -199,6 +214,8 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 %if %{with python2}
+# since 1.8.0 python 2 module is no longer installed
+install -Dp pygobject/XApp.py $RPM_BUILD_ROOT%{py_sitedir}/gi/overrides/XApp.py
 %py_comp $RPM_BUILD_ROOT%{py_sitedir}
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
 %py_postclean
@@ -229,11 +246,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f xapp.lang
 %defattr(644,root,root,755)
-%doc AUTHORS README.md
+%doc AUTHORS README.md debian/changelog
 # utility apps, not related to library
 %attr(755,root,root) %{_bindir}/pastebin
 %attr(755,root,root) %{_bindir}/upload-system-info
 %attr(755,root,root) %{_bindir}/xfce4-set-wallpaper
+%dir %{_libexecdir}/xapps
 # misc data, some for use with library, some independently
 %{_datadir}/glib-2.0/schemas/org.x.apps.gschema.xml
 %{_iconsdir}/hicolor/scalable/actions/add-files-to-archive-symbolic.svg
@@ -243,6 +261,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/scalable/actions/view-*-symbolic*.svg
 %{_iconsdir}/hicolor/scalable/actions/xapp-*-symbolic*.svg
 %{_iconsdir}/hicolor/scalable/categories/xapp-prefs-*-symbolic.svg
+
+# status notifier watcher
+%dir %{_libexecdir}/xapps/sn-watcher
+%attr(755,root,root) %{_libexecdir}/xapps/sn-watcher/xapp-sn-watcher
+/etc/xdg/autostart/xapp-sn-watcher.desktop
+%{_datadir}/dbus-1/services/org.x.StatusNotifierWatcher.service
 
 %files libs
 %defattr(644,root,root,755)
@@ -290,3 +314,10 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitedir}/gi/overrides/XApp.py
 %{py3_sitedir}/gi/overrides/__pycache__/XApp.cpython-*.py[co]
 %endif
+
+%files -n mate-applet-xapp-status
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/xapps/mate-xapp-status-applet.py
+%{_libexecdir}/xapps/applet_constants.py
+%{_datadir}/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
+%{_datadir}/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
