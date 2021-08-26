@@ -8,21 +8,21 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	1.8.4
-Release:	2
+Version:	2.2.3
+Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
-#Source0Download: https://github.com/linuxmint/xapps/releases
-Source0:	https://github.com/linuxmint/xapps/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	2de8aaa655f58e270fb1e137d725b8a5
-URL:		https://github.com/linuxmint/xapps
+#Source0Download: https://github.com/linuxmint/xapp/releases
+Source0:	https://github.com/linuxmint/xapp/archive/%{version}/xapp-%{version}.tar.gz
+# Source0-md5:	a0461da68a3774a375b9d37d090f975a
+URL:		https://github.com/linuxmint/xapp
 BuildRequires:	cairo-devel
 BuildRequires:	cairo-gobject-devel
 BuildRequires:	dbus-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.37.3
-BuildRequires:	gtk+3-devel >= 3.3.16
+BuildRequires:	glib2-devel >= 1:2.44.0
+BuildRequires:	gtk+3-devel >= 3.16
 BuildRequires:	gtk-doc
 BuildRequires:	libdbusmenu-gtk3-devel
 BuildRequires:	libgnomekbd-devel
@@ -37,10 +37,11 @@ BuildRequires:	python-pygobject3 >= 3
 BuildRequires:	python3 >= 1:3
 BuildRequires:	python3-pygobject3 >= 3
 %endif
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
-Requires(post,postun):	glib2 >= 1:2.40
+Requires(post,postun):	glib2 >= 1:2.44.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -65,8 +66,8 @@ Summary(pl.UTF-8):	Biblioteka narzędziowa dla aplikacji X
 License:	LGPL v3+
 Group:		X11/Applications
 Requires:	gdk-pixbuf2 >= 2.22.0
-Requires:	glib2 >= 1:2.37.3
-Requires:	gtk+3 >= 3.3.16
+Requires:	glib2 >= 1:2.44.0
+Requires:	gtk+3 >= 3.16
 
 %description libs
 X applications utility library.
@@ -82,8 +83,8 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel
 Requires:	gdk-pixbuf2-devel >= 2.22.0
-Requires:	glib2-devel >= 1:2.37.3
-Requires:	gtk+3-devel >= 3.3.16
+Requires:	glib2-devel >= 1:2.44.0
+Requires:	gtk+3-devel >= 3.16
 Requires:	libgnomekbd-devel
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libxkbfile-devel
@@ -196,7 +197,7 @@ Applet stanu XApp dla MATE - miejsce, gdzie pojawiają się ikony stanu
 XApp.
 
 %prep
-%setup -q
+%setup -q -n xapp-%{version}
 
 %build
 %meson build \
@@ -241,6 +242,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
+%post	-n mate-applet-xapp-status
+%update_icon_cache hicolor
+
+%postun	-n mate-applet-xapp-status
+%update_icon_cache hicolor
+
 %files -f xapp.lang
 %defattr(644,root,root,755)
 %doc AUTHORS README.md debian/changelog
@@ -248,6 +255,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pastebin
 %attr(755,root,root) %{_bindir}/upload-system-info
 %attr(755,root,root) %{_bindir}/xfce4-set-wallpaper
+%attr(755,root,root) /etc/X11/xinit/xinitrc.d/80xapp-gtk3-module.sh
+%attr(755,root,root) %{_libdir}/gtk-3.0/modules/libxapp-gtk3-module.so
 %dir %{_libexecdir}/xapps
 # misc data, some for use with library, some independently
 %{_datadir}/glib-2.0/schemas/org.x.apps.gschema.xml
@@ -257,7 +266,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/scalable/actions/media-mount-symbolic.svg
 %{_iconsdir}/hicolor/scalable/actions/view-*-symbolic*.svg
 %{_iconsdir}/hicolor/scalable/actions/xapp-*-symbolic*.svg
+%{_iconsdir}/hicolor/scalable/apps/xapp-favorites-app.svg
+%{_iconsdir}/hicolor/scalable/apps/xapp-favorites-app-symbolic.svg
 %{_iconsdir}/hicolor/scalable/categories/xapp-prefs-*-symbolic.svg
+%{_iconsdir}/hicolor/scalable/emblems/emblem-xapp-favorite.svg
+%{_iconsdir}/hicolor/scalable/places/xapp-user-favorites.svg
+%{_iconsdir}/hicolor/scalable/places/xapp-user-favorites-symbolic.svg
 
 # status notifier watcher
 %dir %{_libexecdir}/xapps/sn-watcher
@@ -318,3 +332,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_libexecdir}/xapps/applet_constants.py
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
 %{_datadir}/mate-panel/applets/org.x.MateXAppStatusApplet.mate-panel-applet
+%{_iconsdir}/hicolor/scalable/apps/xapp-mate-status-applet.svg
