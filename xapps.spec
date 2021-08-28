@@ -9,7 +9,7 @@ Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
 Version:	2.2.3
-Release:	1
+Release:	2
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapp/releases
@@ -224,7 +224,7 @@ install -Dp pygobject/XApp.py $RPM_BUILD_ROOT%{py_sitedir}/gi/overrides/XApp.py
 %py3_ocomp $RPM_BUILD_ROOT%{py3_sitedir}
 %endif
 
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ie
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,ber,zgh}
 
 %find_lang xapp
 
