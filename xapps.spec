@@ -224,7 +224,7 @@ install -Dp pygobject/XApp.py $RPM_BUILD_ROOT%{py_sitedir}/gi/overrides/XApp.py
 %py3_ocomp $RPM_BUILD_ROOT%{py3_sitedir}
 %endif
 
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,ber,zgh}
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{ie,zgh}
 
 %find_lang xapp
 
