@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	2.2.3
-Release:	4
+Version:	2.6.1
+Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
-#Source0Download: https://github.com/linuxmint/xapp/releases
+#Source0Download: https://github.com/linuxmint/xapp/tags
 Source0:	https://github.com/linuxmint/xapp/archive/%{version}/xapp-%{version}.tar.gz
-# Source0-md5:	a0461da68a3774a375b9d37d090f975a
+# Source0-md5:	61b7effc6629ed5469abc1fc0f3be5bf
 URL:		https://github.com/linuxmint/xapp
 BuildRequires:	cairo-devel
 BuildRequires:	cairo-gobject-devel
@@ -45,6 +45,8 @@ Requires(post,postun):	glib2 >= 1:2.44.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
+# for xapp-gpu-offload
+Requires:	python3-xapps-overrides = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -254,10 +256,10 @@ rm -rf $RPM_BUILD_ROOT
 # utility apps, not related to library
 %attr(755,root,root) %{_bindir}/pastebin
 %attr(755,root,root) %{_bindir}/upload-system-info
+%attr(755,root,root) %{_bindir}/xapp-gpu-offload
 %attr(755,root,root) %{_bindir}/xfce4-set-wallpaper
 %attr(755,root,root) /etc/X11/xinit/xinitrc.d/80xapp-gtk3-module.sh
 %attr(755,root,root) %{_libdir}/gtk-3.0/modules/libxapp-gtk3-module.so
-%dir %{_libexecdir}/xapps
 # misc data, some for use with library, some independently
 %{_datadir}/glib-2.0/schemas/org.x.apps.gschema.xml
 %{_iconsdir}/hicolor/scalable/actions/add-files-to-archive-symbolic.svg
@@ -274,8 +276,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/scalable/places/xapp-user-favorites-symbolic.svg
 
 # status notifier watcher
-%dir %{_libexecdir}/xapps/sn-watcher
-%attr(755,root,root) %{_libexecdir}/xapps/sn-watcher/xapp-sn-watcher
+%dir %{_libdir}/xapps
+%attr(755,root,root) %{_libdir}/xapps/xapp-sn-watcher
 /etc/xdg/autostart/xapp-sn-watcher.desktop
 %{_datadir}/dbus-1/services/org.x.StatusNotifierWatcher.service
 
@@ -328,6 +330,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n mate-applet-xapp-status
 %defattr(644,root,root,755)
+%dir %{_libexecdir}/xapps
 %attr(755,root,root) %{_libexecdir}/xapps/mate-xapp-status-applet.py
 %{_libexecdir}/xapps/applet_constants.py
 %{_datadir}/dbus-1/services/org.mate.panel.applet.MateXAppStatusAppletFactory.service
