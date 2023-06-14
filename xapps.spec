@@ -31,11 +31,11 @@ BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 %if %{with python2}
 BuildRequires:	python >= 2
-BuildRequires:	python-pygobject3 >= 3
+BuildRequires:	python-pygobject3-devel >= 3
 %endif
 %if %{with python3}
 BuildRequires:	python3 >= 1:3
-BuildRequires:	python3-pygobject3 >= 3
+BuildRequires:	python3-pygobject3-devel >= 3
 %endif
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
