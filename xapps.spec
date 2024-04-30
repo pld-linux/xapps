@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	2.6.1
+Version:	2.8.2
 Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapp/tags
 Source0:	https://github.com/linuxmint/xapp/archive/%{version}/xapp-%{version}.tar.gz
-# Source0-md5:	61b7effc6629ed5469abc1fc0f3be5bf
+# Source0-md5:	efe606f2795cb5031a4c380d3dedce32
 URL:		https://github.com/linuxmint/xapp
 BuildRequires:	cairo-devel
 BuildRequires:	cairo-gobject-devel
@@ -22,11 +22,11 @@ BuildRequires:	dbus-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.22.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.44.0
-BuildRequires:	gtk+3-devel >= 3.16
+BuildRequires:	gtk+3-devel >= 3.22
 BuildRequires:	gtk-doc
 BuildRequires:	libdbusmenu-gtk3-devel
 BuildRequires:	libgnomekbd-devel
-BuildRequires:	meson
+BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 %if %{with python2}
@@ -69,7 +69,7 @@ License:	LGPL v3+
 Group:		X11/Applications
 Requires:	gdk-pixbuf2 >= 2.22.0
 Requires:	glib2 >= 1:2.44.0
-Requires:	gtk+3 >= 3.16
+Requires:	gtk+3 >= 3.22
 
 %description libs
 X applications utility library.
@@ -86,7 +86,7 @@ Requires:	%{name}-libs = %{version}-%{release}
 Requires:	cairo-devel
 Requires:	gdk-pixbuf2-devel >= 2.22.0
 Requires:	glib2-devel >= 1:2.44.0
-Requires:	gtk+3-devel >= 3.16
+Requires:	gtk+3-devel >= 3.22
 Requires:	libgnomekbd-devel
 Requires:	xorg-lib-libX11-devel
 Requires:	xorg-lib-libxkbfile-devel
