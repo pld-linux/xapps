@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	2.8.7
-Release:	2
+Version:	2.8.8
+Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapp/tags
 Source0:	https://github.com/linuxmint/xapp/archive/%{version}/xapp-%{version}.tar.gz
-# Source0-md5:	1da176d1d5eb323dd3df606e1c630777
+# Source0-md5:	6620cb7aeb1a1ba1fd2c10cb3403ce48
 URL:		https://github.com/linuxmint/xapp
 BuildRequires:	cairo-devel
 BuildRequires:	cairo-gobject-devel
@@ -38,7 +38,7 @@ BuildRequires:	python3 >= 1:3
 BuildRequires:	python3-pygobject3-devel >= 3
 %endif
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libxkbfile-devel
 Requires(post,postun):	glib2 >= 1:2.44.0
@@ -202,16 +202,16 @@ XApp.
 %setup -q -n xapp-%{version}
 
 %build
-%meson build \
+%meson \
 	%{!?with_static_libs:--default-library=shared} \
 	%{?with_apidocs:-Ddocs=true}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with python2}
 # since 1.8.0 python 2 module is no longer installed
