@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# API documentation
-%bcond_without	python2		# CPython 2.x binding
+%bcond_with	python2		# CPython 2.x binding
 %bcond_without	python3		# CPython 3.x binding
 %bcond_without	static_libs	# static library
 #
