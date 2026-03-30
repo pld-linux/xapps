@@ -8,13 +8,13 @@
 Summary:	Components common to multiple desktop environments
 Summary(pl.UTF-8):	Komponenty wspólne dla wielu środowisk graficznych
 Name:		xapps
-Version:	2.8.8
-Release:	2
+Version:	3.2.2
+Release:	1
 License:	LGPL v3+ (library), GPL v3+ (xfce4-set-wallpaper tool)
 Group:		X11/Applications
 #Source0Download: https://github.com/linuxmint/xapp/tags
 Source0:	https://github.com/linuxmint/xapp/archive/%{version}/xapp-%{version}.tar.gz
-# Source0-md5:	6620cb7aeb1a1ba1fd2c10cb3403ce48
+# Source0-md5:	16dce80be75001e727a2bd6a465e7379
 URL:		https://github.com/linuxmint/xapp
 BuildRequires:	cairo-devel
 BuildRequires:	cairo-gobject-devel
@@ -175,6 +175,9 @@ License:	LGPL v3+
 Group:		Libraries/Python
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	python3-pygobject3 >= 3
+%if %{without python2}
+Obsoletes:	python-xapps-overrides < %{version}-%{release}
+%endif
 Obsoletes:	python3-xapp < 1.4.8
 
 %description -n python3-xapps-overrides
@@ -259,7 +262,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xapp-gpu-offload
 %attr(755,root,root) %{_bindir}/xfce4-set-wallpaper
 %attr(755,root,root) /etc/X11/xinit/xinitrc.d/80xapp-gtk3-module.sh
-%attr(755,root,root) %{_libdir}/gtk-3.0/modules/libxapp-gtk3-module.so
+%{_libdir}/gtk-3.0/modules/libxapp-gtk3-module.so
 # misc data, some for use with library, some independently
 %{_datadir}/glib-2.0/schemas/org.x.apps.gschema.xml
 %{_iconsdir}/hicolor/scalable/actions/add-files-to-archive-symbolic.svg
@@ -283,13 +286,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libxapp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libxapp.so.1
+%{_libdir}/libxapp.so.*.*.*
+%ghost %{_libdir}/libxapp.so.1
 %{_libdir}/girepository-1.0/XApp-1.0.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libxapp.so
+%{_libdir}/libxapp.so
 %{_includedir}/xapp
 %{_datadir}/gir-1.0/XApp-1.0.gir
 %{_pkgconfigdir}/xapp.pc
